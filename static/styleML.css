@@ -1,0 +1,29 @@
+body{
+		background-image: url('connectwork.png');
+		background-color:black;
+        font-size: 20px;
+        font-weight: bold;
+        font-family: 'courier', 'Arial Narrow', Arial, sans-serif;
+        color: greenyellow;
+
+	}
+
+#header{
+            text-align: center;
+            font-size: 35px;
+            font-family: 'courier', 'Arial Narrow', Arial, sans-serif;
+            color: greenyellow;
+        }
+    
+#custom_button{
+            padding:20px;
+            text-shadow: 3px 3px 4px #000000;
+            color: white;
+            font-weight: bold;
+            font-family: 'courier', 'Arial Narrow', Arial, sans-serif;
+            font-size: 20px;
+            background-color: #73e600;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+        }

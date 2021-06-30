@@ -1,0 +1,265 @@
+<html>
+<head>
+    <title>simul</title>
+    <link rel="stylesheet" type="text/css"  href="/static/styleML.css" />
+    <script type="text/javascript">
+        function preview_image_1(event) 
+        {
+
+        var reader_1 = new FileReader();
+        reader_1.onload = function()
+            {
+            var output_1 = document.getElementById('output_image_1');
+            output_1.src = reader_1.result;
+            }
+
+        reader_1.readAsDataURL(event.target.files[0]);
+        }
+    function preview_image_2(event) 
+        {
+        var reader_2 = new FileReader();
+        reader_2.onload = function()
+            {
+            var output_2 = document.getElementById('output_image_2');
+            output_2.src = reader_2.result;
+            }
+        reader_2.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+    <style>
+        .content-wrapper{
+            display: flex;
+            justify-content: space-around;
+            padding-left: 30px;
+            padding-right: 30px;
+        }   
+
+        .input-wrapper{
+            margin-left: 10%;
+        }
+
+        .upload-image{
+            margin: auto;
+            padding: 20px;
+        }
+
+        #custom_button{
+            padding:10px;
+            color: white;
+            background-color: #7fa851 ;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #custom_button:hover {
+            background-color:#5e9e52;
+        }
+        #custom_button_1{
+            padding:10px;
+            color: white;
+            background-color: #7fa851 ;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #custom_button_1:hover {
+            background-color:#5e9e52;
+        }
+        #custom_button_2{
+            padding:10px;
+            color: white;
+            background-color: #7fa851 ;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #custom_button_2:hover {
+            background-color:#5e9e52;
+        }
+        #file_status{
+            margin-left: 10px;
+            font-family: sans-serif;
+            font-size: large;
+            color: rgb(150, 144, 144);
+        }
+
+
+        .image-preview{
+            text-align: center;
+            position: unset;
+            padding: 30px;
+            width: 400px;
+            min-height: 200px;
+            border: 2px solid #5a5a5a ;
+            margin-top: 15px;
+            background-color: rgb(228, 225, 225);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #6d6c6c;
+            box-sizing: border-box;
+            object-fit: cover;
+
+        }
+
+        .image-preview--image{
+            display: none;
+            max-width:100%;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        #output_image_1{
+            
+            display: flex;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        #output_image_2{
+            
+            display: flex;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+
+        .output-wrapper{
+            margin-right: 10%;
+            margin-top: 20px;
+            padding: 20px;
+            text-align: center;
+            position: unset;
+            padding: 30px;
+            width: 400px;
+            min-height: 200px;
+            border: 2px solid #5a5a5a ;
+            margin-top: 15px;
+            background-color: rgb(228, 225, 225);
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #6d6c6c;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div id='header' style="text-align: center;"><h1>Handwritten Equation Solver</h1></div>
+
+    <div class="content-wrapper">
+        <div class="input-wrapper">
+            <form action = "/simul.html" method = "post" enctype="multipart/form-data">
+                <div class="upload-image">
+                    <h5>Note:The symbols recognized by system are 'a' and 'b',<br>
+                        write the euqations in k1a + k2b + k3 format,<br>
+                        where k1,k2,k3 are coefficients,the RHS is assumed to be '0'</h5>
+                    <h2>Upload an image:1</h2>
+        
+                    <input type="file" accept="image/ *" id="real-file_1"  name="file1" onchange="preview_image_1(event)" hidden="hidden">
+                    <button type="button" id="custom_button_1" onchange="preview_image_1(event)">CHOOSE A FILE</button>
+                    <span style="position: unset;" id="file_status_1"></span>
+                    <p id="file_status">filename:{{name1}}</p>
+                    <div class="image-preview" id="img-preview_1">
+                        <img alt="" id="output_image_1"/>
+                        <img src="{{imgg1}}" alt="" id="output_image_1">
+                    </div>
+            
+                </div>
+                <div class="upload-image">
+                    <h2>Upload an image:2</h2>
+        
+                    <input type="file" accept="image/ *" id="real-file_2"  name="file2" onchange="preview_image_2(event)" hidden="hidden">
+                    <button type="button" id="custom_button_2" onchange="preview_image_2(event)">CHOOSE A FILE</button>
+                    <span style="position: unset;" id="file_status_2"></span>
+                    <p id="file_status">filename:{{name2}}</p>
+
+                    <div class="image-preview" id="img-preview_2">
+                        <img alt="" id="output_image_2"/>
+                        <img src="{{imgg2}}" alt="" id="output_image_2">
+                    </div>
+            
+                </div>
+                <!--Image upload ends-->
+                <input type="submit" id='custom_button' name='post_blog_btn' value ="Upload" style="margin-left:20px;" >
+                
+            </form>
+        </div>
+        
+
+        <div class="output-wrapper">
+            
+            <p>Predicted String 1:{{ansb}}</p>
+            <p>Predicted String 2:{{ansd}}</p>
+            <input type="text" value="{{ansb}}" >
+            <input type="text" value="{{ansd}}" >
+            <p>Final Answer:{{ans}}</p> 
+        </div>
+    </div>
+
+<script>
+    
+    
+    //variables for the image upload button 1
+        const real_file_btn_1 = document.getElementById("real-file_1");
+        const custom_btn_1 = document.getElementById("custom_button_1");
+        const custom_text_1 = document.getElementById("file_status_1");
+
+        //variables for the preview image 
+        const inp_file_1 = document.getElementById("real-file_1");
+        const preview_container_1 = document.getElementById("img-preview_1");
+
+        //Code for formatting of text in the  editor
+        
+
+        
+        //Functions for image upload button
+        custom_btn_1.addEventListener("click", function(){
+            real_file_btn_1.click();
+        });
+
+        real_file_btn_1.addEventListener("change", function(){
+            if (real_file_btn_1.value){
+                custom_text_1.innerHTML = real_file_btn_1.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+            }
+            else{
+                custom_text_1.innerHTML = "No file chosen,yet."
+            }
+        });
+
+
+        const real_file_btn_2 = document.getElementById("real-file_2");
+        const custom_btn_2 = document.getElementById("custom_button_2");
+        const custom_text_2 = document.getElementById("file_status_2");
+
+        //variables for the preview image 
+        const inp_file_2 = document.getElementById("real-file_2");
+        const preview_container_2 = document.getElementById("img-preview_2");
+
+        //Code for formatting of text in the  editor
+        
+
+        
+        //Functions for image upload button
+        custom_btn_2.addEventListener("click", function(){
+            real_file_btn_2.click();
+        });
+
+        real_file_btn_2.addEventListener("change", function(){
+            if (real_file_btn_2.value){
+                custom_text_2.innerHTML = real_file_btn_2.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+            }
+            else{
+                custom_text_2.innerHTML = "No file chosen,yet."
+            }
+        });
+        
+</script>
+</body>
+</html>

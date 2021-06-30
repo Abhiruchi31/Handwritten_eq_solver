@@ -1,0 +1,186 @@
+<html>
+<head>
+    <title>upload</title>
+    <link rel="stylesheet" type="text/css"  href="/static/styleML.css" />
+    <script type='text/javascript'>
+        function preview_image(event) 
+        {
+        var reader = new FileReader();
+        reader.onload = function()
+        {
+        var output = document.getElementById('output_image');
+        output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+    <style>
+        .content-wrapper{
+            display: flex;
+            justify-content: space-around;
+            padding-left: 30px;
+            padding-right: 30px;
+        }   
+
+        .input-wrapper{
+            margin-left: 10%;
+        }
+
+        .upload-image{
+            margin: auto;
+            padding: 20px;
+        }
+
+        #custom_button{
+            padding:10px;
+            color: white;
+            background-color: #7fa851 ;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #custom_button:hover {
+            background-color:#5e9e52;
+        }
+
+        #file_status{
+            margin-left: 10px;
+            font-family: sans-serif;
+            font-size: large;
+            color: rgb(150, 144, 144);
+        }
+
+
+        .image-preview{
+            text-align: center;
+            position: unset;
+            padding: 30px;
+            width: 400px;
+            min-height: 200px;
+            border: 2px solid #5a5a5a ;
+            margin-top: 15px;
+            background-color: rgb(228, 225, 225);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #6d6c6c;
+            box-sizing: border-box;
+            object-fit: cover;
+
+        }
+
+        .image-preview--image{
+            display: none;
+            max-width:100%;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        #output_image{
+            
+            display: flex;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .output-wrapper{
+            margin-right: 10%;
+            margin-top: 20px;
+            padding: 20px;
+            text-align: center;
+            position: unset;
+            padding: 30px;
+            width: 400px;
+            min-height: 200px;
+            border: 2px solid #5a5a5a ;
+            margin-top: 15px;
+            background-color: rgb(228, 225, 225);
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #6d6c6c;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div id='header' style="text-align: center;"><h1>Handwritten Equation Solver</h1></div>
+
+    <div class="content-wrapper">
+        <div class="input-wrapper">
+            <form action = "/trig.html" method = "post" enctype="multipart/form-data">
+                <div class="upload-image">
+                    <h2>Upload an image:</h2>
+        
+                    <input type="file" accept="image/ *" id="real-file"  name="file" onchange="preview_image(event)" hidden="hidden">
+                    <button type="button" id="custom_button" onchange="preview_image(event)">CHOOSE A FILE</button>
+                    <span style="position: unset;" id="file_status"></span>
+                    <p id="file_status">filename:{{name}}</p>
+                    <div class="image-preview" id="img-preview">
+                        <img alt="" id="output_image"/>
+                        <img src="{{imgg}}" alt="" id="output_image">
+                    </div>
+            
+                </div>
+        
+                <!--Image upload ends-->
+                <input type="submit" id='custom_button' name='post_blog_btn' value ="Upload" style="margin-left:20px;"  >
+                
+            </form>
+        </div>
+        
+
+        <div class="output-wrapper">
+            <p></p>
+            <p>Chosen File Name: {{name}}</p>
+            <p>Predicted String:{{ans1}}</p>
+            <input type="text" value="{{ans1}}" >
+            <p>Final Answer:{{ans}}</p> 
+        </div>
+    </div>
+
+<script>
+    //variables for the image upload button
+    const real_file_btn = document.getElementById("real-file");
+        const custom_btn = document.getElementById("custom_button");
+        const custom_text = document.getElementById("file_status");
+
+        //variables for the preview image 
+        const inp_file = document.getElementById("real-file");
+        const preview_container = document.getElementById("img-preview");
+        const preview_img = preview_container.querySelector("image-preview--image");
+        const preview_default_text = preview_container.querySelector("img-preview--default-text");
+
+        //Code for formatting of text in the  editor
+        window.addEventListener('load', function(){
+            document.getElementById('editor1').setAttribute('contenteditable', 'true');
+            //document.getElementById('sampleeditor2').setAttribute('contenteditable', 'true');
+        });
+
+        function format(command, value) {
+            document.execCommand(command, false, value);
+        }
+
+        //Functions for image upload button
+        custom_btn.addEventListener("click", function(){
+            real_file_btn.click();
+        });
+
+        real_file_btn.addEventListener("change", function(){
+            if (real_file_btn.value){
+                custom_text.innerHTML = real_file_btn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+            }
+            else{
+                custom_text.innerHTML = "No file chosen,yet."
+            }
+        });
+
+
+</script>
+</body>
+</html>
